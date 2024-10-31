@@ -1,0 +1,21 @@
+.container {
+    box-sizing: border-box;
+
+    width: auto;
+    height: auto;
+
+    overflow-x: scroll;
+}
+
+.section {
+    background-color: var(--color-background);
+    margin: 1rem 0;
+}
+
+.section:first-child {
+    margin-top: 0;
+}
+
+.section:last-child {
+    margin-bottom: 0;
+}

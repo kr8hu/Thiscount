@@ -1,0 +1,53 @@
+.container {
+    box-sizing: border-box;
+
+    width: 100%;
+    height: auto;
+
+    padding: 1rem;
+
+    border-radius: 15px;
+
+    background-color: var(--color-coupon);
+}
+
+.row,
+.col {
+    box-sizing: border-box;
+    display: flex;
+}
+
+.row {
+    flex-direction: row;
+    gap: 1rem;
+
+    width: 100%;
+}
+
+.col {
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+}
+
+.row:nth-child(1) .col {
+    padding: 0.5rem;
+}
+
+.row:nth-child(2) .col {
+    padding: 1rem 0.5rem;
+}
+
+.row:nth-child(1) .col:last-child {
+    align-items: flex-end;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.code {
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-family: "Roboto Mono", monospace;
+}

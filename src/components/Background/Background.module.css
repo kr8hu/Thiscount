@@ -1,0 +1,25 @@
+.container,
+.layer {
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100%;
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    opacity: 0.05;
+    overflow: hidden;
+
+    background-image: url('../../assets/images/backgrounds/background.webp');
+    background-repeat: repeat;
+    background-size: 100% auto;
+
+    z-index: 0;
+
+    filter: brightness(var(--brightness-layout-header));
+
+    transition: ease-in-out 0.75s all;
+}

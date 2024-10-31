@@ -1,0 +1,26 @@
+.container {
+    box-sizing: border-box;
+
+    width: auto;
+    height: auto;
+
+    overflow-x: scroll;
+}
+
+.container > div {
+    margin: 1rem 0;
+}
+
+.container > div:first-child {
+    margin-top: 0;
+}
+
+.container > div:last-child {
+    margin-bottom: 0;
+}
+
+.placeholder {
+    font-style: italic;
+    margin-top: 1rem;
+    display: block;
+}

@@ -1,0 +1,134 @@
+.container {
+    box-sizing: border-box;
+
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+    overflow: hidden;
+}
+
+/**
+    Háttér
+**/
+.container[data-extended="true"] .background {
+    transform: scale(1.25) rotate(7deg);
+}
+
+.container[data-extended="false"] .background {
+    transform: scale(1) rotate(0);
+}
+
+/**
+    Szerkezet
+**/
+.row,
+.col {
+    box-sizing: border-box;
+    display: flex;
+}
+
+.row {
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    background-color: var(--background-layout);
+}
+
+.col {
+    width: 100%;
+    flex-direction: column;
+    position: relative;
+}
+
+.container[data-extended="true"] .col:first-child {
+    height: 12rem;
+    transition: ease-in-out 0.5s height;
+}
+
+.container[data-extended="false"] .col:first-child {
+    height: 8rem;
+    transition: ease-in-out 0.35s height;
+}
+
+.container[data-extended="true"] .col:last-child {
+    height: calc(100% - 12rem);
+    transition: ease-in-out 0.5s height;
+}
+
+.container[data-extended="false"] .col:last-child {
+    height: calc(100% - 8rem);
+    transition: ease-in-out 0.35s height;
+}
+
+/**
+    Header
+**/
+.hrow,
+.hcol {
+    box-sizing: border-box;
+    display: flex;
+    z-index: 2;
+}
+
+.hrow {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    padding: 1rem;
+
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.hcol {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hcol:first-child,
+.hcol[data-fullwidth="true"] {
+    align-items: flex-start !important;
+}
+
+.hcol:last-child {
+    align-items: flex-end;
+}
+
+.title {
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: rgb(255, 255, 255);
+}
+
+/**
+    Body
+**/
+.body {
+    box-sizing: border-box;
+    overflow-x: scroll;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 1rem;
+
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+
+    background-color: var(--background-layout-wrapper);
+}
+
+.container[data-extended="true"] .body {
+    transition: ease-in-out .75s border-radius;
+}
+
+.container[data-extended="false"] .body {
+    transition: ease-in-out .75s border-radius;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}

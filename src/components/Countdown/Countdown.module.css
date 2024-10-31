@@ -1,0 +1,36 @@
+.container {
+    padding: 0.25rem 0.45rem;
+    border-radius: 5px;
+
+    font-size: 1rem;
+
+    transition: ease-in-out .5s all;
+}
+
+.container[data-expire="later"] {
+    background: linear-gradient(45deg,
+            var(--color-countdown-green-gradient-start),
+            var(--color-countdown-green-gradient-end));
+}
+
+.container[data-expire="in-time"] {
+    background: linear-gradient(45deg,
+            var(--color-countdown-yellow-gradient-start),
+            var(--color-countdown-yellow-gradient-end));
+}
+
+.container[data-expire="soon"] {
+    background: linear-gradient(45deg,
+            var(--color-countdown-red-gradient-start),
+            var(--color-countdown-red-gradient-end));
+}
+
+.counter:not(:last-child)::after {
+    content: ':';
+    display: inline-block;
+}
+
+.placeholder[data-expired="true"] {
+    font-style: italic;
+    font-weight: 300;
+}

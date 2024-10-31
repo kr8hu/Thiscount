@@ -1,0 +1,86 @@
+.container {
+    box-sizing: border-box;
+
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+    overflow: hidden;
+}
+
+/**
+    Szerkezet
+**/
+.row,
+.col {
+    box-sizing: border-box;
+    display: flex;
+}
+
+.row {
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    background-color: var(--background-layout);
+}
+
+.col {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    padding: 0 1rem;
+}
+
+.col:nth-child(1) {
+    height: 20%;
+}
+
+.col:nth-child(2) {
+    height: 80%;
+}
+
+
+/**
+    Cím
+**/
+.title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #fff;
+}
+
+
+/**
+    Submit
+**/
+.submit {
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: fit-content;
+    height: auto;
+
+    margin: 0 auto;
+    padding: 1rem 0;
+
+    border: 0;
+    background-color: transparent;
+}
+
+.submitText {
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+}

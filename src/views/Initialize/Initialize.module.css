@@ -1,0 +1,33 @@
+.container {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--color-primary);
+
+    overflow: hidden;
+    position: relative;
+}
+
+.background {
+    transition: ease-in-out 30s all;
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+    position: relative;
+    color: #fff;
+}
+
+.progress {
+    font-size: 1rem;
+    position: relative;
+    color: #fff
+}
