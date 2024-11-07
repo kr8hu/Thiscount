@@ -82,7 +82,7 @@ function Settings({ navigator }: Props) {
         },
     ];
 
-    
+
     /**
      * sortPropertyName
      * 
@@ -116,17 +116,17 @@ function Settings({ navigator }: Props) {
             onClick: () => openActionSheet(sortPropertyActionSheet, onSelectSortProperty)
         },
         {
-            titleNode: "settings_section_title_clear",
-            descriptionNode: "settings_section_description_clear",
-            value: "Kattints ide az adatok kiválasztásához",
-            onClick: () => openActionSheet(couponsForDeletionActionSheet, onSelectPostsForDeletion)
-        },
-        {
             titleNode: "settings_section_title_expired_visibility",
             descriptionNode: "settings_section_description_expired_visibility",
             value: expiredVisibilityStatus,
             onClick: () => openActionSheet(expiredVisibilityActionSheet, onSelectExpiredVisibility)
-        }
+        },
+        {
+            titleNode: "settings_section_title_clear",
+            descriptionNode: "settings_section_description_clear",
+            value: "Kattints ide az adatok kiválasztásához",
+            onClick: () => openActionSheet(couponsForDeletionActionSheet, onSelectCouponsForDeletion)
+        },
     ];
 
 
@@ -167,7 +167,7 @@ function Settings({ navigator }: Props) {
      * selectPostsForDeletion
      * 
      */
-    const onSelectPostsForDeletion = (index: number) => {
+    const onSelectCouponsForDeletion = (index: number) => {
         deleteCouponsHandler(index);
     }
 
@@ -184,6 +184,7 @@ function Settings({ navigator }: Props) {
                 break;
             }
             default: {
+                setAppState(actionTypes.app.SET_COUPONS, []);
                 CouponService.clear();
             }
         }

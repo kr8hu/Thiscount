@@ -52,3 +52,11 @@ Android esetén az Android Studio, iOS esetén az Xcode betöltődése után a p
 
 - **Platform**: Android 5+, iOS 11+, WebView 60+ (Chrome), WKWebView
 - **Szükséges támogatás**: IndexedDB az adatok helyi mentéséhez
+
+## Képernyőképek
+<div style="display: flex; justify-content: space-between;">
+<img src="screenshots/localhost_3000_(Nexus 5X).png" width="250" height="auto" style="margin-right: 5px;">
+<img src="screenshots/localhost_3000_(Nexus 5X)_1.png" width="250" height="auto" style="margin-right: 5px;">
+<img src="screenshots/localhost_3000_(Nexus 5X)_2.png" width="250" height="auto" style="margin-right: 5px;">
+<img src="screenshots/localhost_3000_(Nexus 5X)_3.png" width="250" height="auto" style="margin-right: 5px;">
+</div>
