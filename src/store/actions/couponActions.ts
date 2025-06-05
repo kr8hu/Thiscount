@@ -33,16 +33,6 @@ export const addCoupon = createAsyncThunk(ADD_COUPON, async (coupon: ICoupon) =>
 );
 
 /**
- * loadCoupon
- * 
- * @returns 
- */
-export const loadCoupon = createAsyncThunk(FIND_COUPON, async (id: string) => {
-    const coupon = await CouponService.find(id);
-    return coupon;
-});
-
-/**
  * loadCoupons
  * 
  * @returns 
@@ -50,6 +40,16 @@ export const loadCoupon = createAsyncThunk(FIND_COUPON, async (id: string) => {
 export const loadCoupons = createAsyncThunk(FIND_COUPONS, async () => {
     const coupons = await CouponService.findAll();
     return coupons;
+});
+
+/**
+ * loadCoupon
+ * 
+ * @returns 
+ */
+export const loadCoupon = createAsyncThunk(FIND_COUPON, async (id: string) => {
+    const coupon = await CouponService.find(id);
+    return coupon;
 });
 
 /**

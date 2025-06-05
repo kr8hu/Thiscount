@@ -43,14 +43,6 @@ const couponSlice = createSlice({
             .addCase(addCoupon.fulfilled, (state: any, action: PayloadAction<ICoupon>) => {
                 state.coupons.push(action.payload);
             })
-            //remove
-            .addCase(removeCoupon.fulfilled, (state: any, action: PayloadAction<string>) => {
-                state.coupons = state.coupons.filter((c: ICoupon) => c.id !== action.payload);
-            })
-            //clear
-            .addCase(clearCoupons.fulfilled, (state: any) => {
-                state.coupons = state.coupons = [];
-            })
             //load all
             .addCase(loadCoupons.pending, (state: any) => {
                 state.loading = true;
@@ -71,16 +63,22 @@ const couponSlice = createSlice({
                 const existingIndex = state.coupons.findIndex((c: ICoupon) => c.id === action.payload.id);
 
                 if (existingIndex !== -1) {
-                    // Frissítjük a meglévőt
                     state.coupons[existingIndex] = action.payload;
                 } else {
-                    // Hozzáadjuk az új kupont
                     state.coupons.push(action.payload);
                 }
             })
             .addCase(loadCoupon.rejected, (state: any, action: any) => {
                 state.loading = false;
                 state.error = action.error.message ?? 'Failed to load coupon';
+            })
+            //remove
+            .addCase(removeCoupon.fulfilled, (state: any, action: PayloadAction<string>) => {
+                state.coupons = state.coupons.filter((c: ICoupon) => c.id !== action.payload);
+            })
+            //clear
+            .addCase(clearCoupons.fulfilled, (state: any) => {
+                state.coupons = state.coupons = [];
             });
     },
 });
