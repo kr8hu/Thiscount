@@ -4,6 +4,13 @@ import {
     useState
 } from 'react';
 
+//Redux
+import { useDispatch } from 'react-redux';
+
+//Store
+import { AppDispatch } from '../../store';
+import { loadCoupon } from '../../store/actions/couponActions';
+
 //Components
 import InputSections from './InputSections';
 
@@ -16,9 +23,6 @@ import { useForm } from '../../hooks/useForm';
 
 //Interfaces
 import ICoupon from '../../interfaces/Coupon';
-
-//Services
-import CouponService from '../../services/CouponService';
 
 //Styles
 import styles from './EditorLayout.module.css';
@@ -41,6 +45,13 @@ interface Props {
  * @returns 
  */
 function EditorLayout({ id, title, onSubmit }: Props) {
+    /**
+     * dispatch
+     * 
+     */
+    const dispatch = useDispatch<AppDispatch>();
+
+
     /**
      * Variables
      * 
@@ -73,7 +84,7 @@ function EditorLayout({ id, title, onSubmit }: Props) {
      * @param id 
      */
     const findCoupon = async (id: string) => {
-        const coupon: ICoupon = await CouponService.find(id);
+        const coupon: ICoupon = await dispatch(loadCoupon(id)).unwrap();
 
         if (coupon) {
             setState(coupon);
@@ -98,6 +109,7 @@ function EditorLayout({ id, title, onSubmit }: Props) {
         if (id === undefined) return;
 
         findCoupon(id);
+        //eslint-disable-next-line
     }, [id]);
 
 

@@ -1,12 +1,13 @@
 //React
 import {
     useEffect,
-    useState,
-    useContext
+    useState
 } from 'react';
 
-//Context
-import { AppContext } from '../../context/App';
+//Redux
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store';
+import { loadCoupons } from '../../store/actions/couponActions';
 
 //Onsen UI
 import ons from 'onsenui';
@@ -30,7 +31,6 @@ import {
 
 //Shared
 import {
-    actionTypes,
     appName,
 } from '../../shared/const';
 import xml from '../../shared/strings.xml';
@@ -57,17 +57,16 @@ interface Props {
  */
 function Initialize({ navigator }: Props) {
     /**
+     * dispatch
+     * 
+     */
+    const dispatch = useDispatch<AppDispatch>();
+
+    /**
      * delayTime
      * 
      */
     const delayTime: number = 750;
-
-
-    /**
-     * Context
-     * 
-     */
-    const { setAppState } = useContext(AppContext);
 
 
     /**
@@ -115,7 +114,7 @@ function Initialize({ navigator }: Props) {
 
 
     /**
-     * initializeDatabases
+     * initializeStores
      * 
      * Alaphelyzetbe állítja az adatokat tároló storeokat
      */
@@ -134,17 +133,12 @@ function Initialize({ navigator }: Props) {
     }
 
     /**
-     * loadCoupons
+     * initCoupons
+     * 
      */
-    const loadCoupons = async () => {
-        const coupons = await CouponService.findAll();
-
-        if (coupons) {
-            setAppState(actionTypes.app.SET_COUPONS, coupons);
-
-            //Betöltési folyamat léptetése
-            setTimeout(() => setProgressId(current => current + 1), delayTime);
-        }
+    const initCoupons = async () => {
+        dispatch(loadCoupons());
+        setTimeout(() => setProgressId(current => current + 1), delayTime);
     }
 
 
@@ -186,7 +180,7 @@ function Initialize({ navigator }: Props) {
                 return;
 
             case loadingProgress.coupons:
-                loadCoupons();
+                initCoupons();
                 return;
 
             default:

@@ -4,6 +4,11 @@ import {
     useEffect
 } from 'react';
 
+//Redux
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store';
+import { loadCoupon } from '../../store/actions/couponActions';
+
 //Capacitor
 import { Clipboard } from '@capacitor/clipboard';
 
@@ -18,9 +23,6 @@ import Background from '../../components/Background';
 
 //Interfaces
 import ICoupon from "../../interfaces/Coupon";
-
-//Services
-import CouponService from '../../services/CouponService';
 
 //Styles
 import styles from './CouponLayout.module.css';
@@ -40,6 +42,13 @@ interface Props {
  * Kupon nézet
  */
 function CouponLayout({ id }: Props) {
+    /**
+     * dispatch
+     * 
+     */
+    const dispatch = useDispatch<AppDispatch>();
+
+
     /**
      * Variables
      * 
@@ -64,7 +73,7 @@ function CouponLayout({ id }: Props) {
      * 
      */
     const findCouponById = async (id: string) => {
-        const result = await CouponService.find(id);
+        const result = await dispatch(loadCoupon(id)).unwrap();
 
         if (result) {
             setCoupon(result);
@@ -76,7 +85,7 @@ function CouponLayout({ id }: Props) {
      * copyToClipboard
      * 
      */
-    const copyToClipboard = (e: any) => {
+    const copyToClipboard = async (e: any) => {
         //Toast beállításai
         const toastSettings = {
             timeout: 3000
@@ -86,13 +95,11 @@ function CouponLayout({ id }: Props) {
         const string = e.target.textContent;
 
         //Másolás vágólapra
-        Clipboard.write({ string })
-            .then(() => {
-                ons.notification.toast("Másolva a vágólapra", toastSettings);
-            })
-            .catch(() => {
-                ons.notification.toast("Hiba a vágólapra másolás közben", toastSettings);
-            })
+        Clipboard.write({ string }).then(() => {
+            ons.notification.toast("Másolva a vágólapra", toastSettings);
+        }).catch(() => {
+            ons.notification.toast("Hiba a vágólapra másolás közben", toastSettings);
+        });
     }
 
 
@@ -102,6 +109,7 @@ function CouponLayout({ id }: Props) {
      */
     useEffect(() => {
         findCouponById(id);
+        //eslint-disable-next-line
     }, [id]);
 
 

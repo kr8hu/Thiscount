@@ -1,6 +1,10 @@
 //React
 import { useEffect } from "react";
 
+//Redux
+import { Provider } from "react-redux";
+import { store } from "../../store";
+
 //Context
 import { AppProvider } from "../../context/App";
 
@@ -16,7 +20,7 @@ import Navigator from "./Navigator";
  * 
  * @returns 
  */
-function App() {  
+function App() {
   /**
    * useEffect
    * 
@@ -30,9 +34,11 @@ function App() {
 
 
   return (
-    <AppProvider>
-      <Navigator />
-    </AppProvider>
+    <Provider store={store}>
+      <AppProvider>
+        <Navigator />
+      </AppProvider>
+    </Provider>
   );
 }
 

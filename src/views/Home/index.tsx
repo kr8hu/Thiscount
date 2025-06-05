@@ -1,6 +1,13 @@
 //React
 import { useContext } from 'react';
 
+//Redux
+import { useDispatch, useSelector } from 'react-redux';
+
+//Store
+import { AppDispatch, RootState } from '../../store';
+import { loadCoupon, removeCoupon } from '../../store/actions/couponActions';
+
 //Context
 import { AppContext } from '../../context/App';
 
@@ -23,12 +30,8 @@ import HeaderLayout from '../../layouts/HeaderLayout';
 import IHeaderButton from '../../interfaces/HeaderButton';
 import ICoupon from '../../interfaces/Coupon';
 
-//Services
-import CouponService from '../../services/CouponService';
-
 //Shared
 import {
-    actionTypes,
     notificationTitle
 } from '../../shared/const';
 
@@ -54,6 +57,20 @@ interface Props {
  */
 function Home({ navigator }: Props) {
     /**
+     * dispatch
+     * 
+     */
+    const dispatch = useDispatch<AppDispatch>();
+
+
+    /**
+     * coupons
+     * 
+     */
+    const { coupons, loading, error } = useSelector((state: RootState) => state.coupons);
+
+
+    /**
      * Variables
      * 
      */
@@ -73,7 +90,7 @@ function Home({ navigator }: Props) {
      * Context
      * 
      */
-    const { appState, setAppState } = useContext(AppContext);
+    const { appState } = useContext(AppContext);
 
 
     /**
@@ -134,37 +151,48 @@ function Home({ navigator }: Props) {
      * 
      */
     const removeSelectedCoupon = async (id: string) => {
-        const coupon = await CouponService.find(id);
+        try {
+            const coupon = await dispatch(loadCoupon(id)).unwrap();
 
-        if (coupon) {
-            ons.notification.confirm({
+            const confirmed: any = await ons.notification.confirm({
                 title: notificationTitle,
                 message: `Biztosan törölni szeretnéd a '${coupon.name}' kupont?`,
                 buttonLabels: ["Mégse", "Törlés"]
-            })
-                .then((result: any) => {
-                    if (result === 0) return;
+            });
 
-                    CouponService.delete(id);
-                    setAppState(actionTypes.app.DELETE_COUPON, id);
-                })
-                .catch((error: any) => {
-                    ons.notification.alert(`${error}`);
-                })
+            if (confirmed === 0) return;
+
+            dispatch(removeCoupon(id));
+        } catch (error: any) {
+            ons.notification.alert(`${error}`);
         }
     }
 
+
+    /**
+     * renderCoupons
+     * 
+     * @returns 
+     */
+    const renderCoupons = () => {
+        if (loading) return <p>Betöltés...</p>;
+        if (error) return <p>Hiba: {error}</p>;
+
+        return (
+            <Coupons
+                src={coupons}
+                filter={filterCoupons}
+                onSelect={viewSelectedCoupon}
+                onPress={removeSelectedCoupon} />
+        )
+    }
 
     return (
         <Page>
             <HeaderLayout
                 title="home_title"
                 buttons={headerButtons}>
-                <Coupons
-                    src={appState.coupons}
-                    filter={filterCoupons}
-                    onSelect={viewSelectedCoupon}
-                    onPress={removeSelectedCoupon} />
+                {renderCoupons()}
             </HeaderLayout>
         </Page>
     )

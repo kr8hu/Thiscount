@@ -1,6 +1,13 @@
 //React
 import { useContext } from 'react';
 
+//Redux
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store';
+
+//Redux - actions
+import { addCoupon } from '../../store/actions/couponActions';
+
 //Context
 import { AppContext } from '../../context/App';
 
@@ -13,11 +20,7 @@ import EditorLayout from '../../layouts/EditorLayout';
 //Interfaces
 import ICoupon from '../../interfaces/Coupon';
 
-//Services
-import CouponService from '../../services/CouponService';
-
 //Shared
-import { actionTypes } from '../../shared/const';
 import { generateRandomString } from '../../shared/utils';
 
 //Styles
@@ -40,21 +43,26 @@ interface Props {
  */
 function Create({ navigator }: Props) {
     /**
+     * dispatch
+     * 
+     */
+    const dispatch = useDispatch<AppDispatch>();
+    /**
      * Context
      * 
      */
-    const { appState, setAppState } = useContext(AppContext);
+    const { appState } = useContext(AppContext);
 
 
     /**
-     * addCoupon
+     * createCoupon
      * 
      */
-    const addCoupon = (data: ICoupon) => {
+    const createCoupon = (data: ICoupon) => {
         const couponsLength = appState.coupons.length;
         const date = data.expiry + "T00:00:00";
         const formattedDate = date.replace(/-/g, '/').replace('T', ' ');
-        const id = (couponsLength+1) +  generateRandomString();
+        const id = (couponsLength + 1) + generateRandomString();
 
         const coupon: ICoupon = {
             id,
@@ -63,8 +71,7 @@ function Create({ navigator }: Props) {
             expiry: new Date(formattedDate).toISOString()
         }
 
-        CouponService.create(coupon);
-        setAppState(actionTypes.app.ADD_COUPON, coupon);
+        dispatch(addCoupon(coupon));
 
         navigator.popPage();
     }
@@ -74,7 +81,7 @@ function Create({ navigator }: Props) {
         <Page>
             <EditorLayout
                 title="Kupon felvétele"
-                onSubmit={addCoupon} />
+                onSubmit={createCoupon} />
         </Page>
     )
 }

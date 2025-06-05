@@ -77,8 +77,9 @@ function Coupon({ id, name, code, expiry, onClick, onPress }: Props) {
         if (isLongPressed === true) {
             Haptics.vibrate({ duration: appSettings.onPressVibrationDuration });
             onPress(id);
+            setIsLongPressed(false);
         }
-    }, [id, isLongPressed, onPress])
+    }, [id, isLongPressed, onPress]);
 
 
     return (

@@ -1,6 +1,17 @@
 //React
 import { useContext } from 'react';
 
+//Redux
+import { useDispatch } from 'react-redux';
+
+//Store
+import { AppDispatch } from '../../store';
+import {
+    clearCoupons,
+    loadCoupons,
+    removeCoupon
+} from '../../store/actions/couponActions';
+
 //Context
 import { AppContext } from '../../context/App';
 
@@ -30,9 +41,6 @@ import {
     couponsForDeletionActionSheet,
     expiredVisibilityActionSheet,
 } from './const';
-
-//Services
-import CouponService from '../../services/CouponService';
 
 //Shared
 import {
@@ -64,6 +72,13 @@ interface Props {
  * Beállítások nézet
  */
 function Settings({ navigator }: Props) {
+    /**
+     * dispatch
+     * 
+     */
+    const dispatch = useDispatch<AppDispatch>();
+
+
     /**
      * useContext
      * 
@@ -184,8 +199,7 @@ function Settings({ navigator }: Props) {
                 break;
             }
             default: {
-                setAppState(actionTypes.app.SET_COUPONS, []);
-                CouponService.clear();
+                dispatch(clearCoupons());
             }
         }
     }
@@ -196,14 +210,13 @@ function Settings({ navigator }: Props) {
      * 
      */
     const deleteExpiredCoupons = async () => {
-        const coupons = await CouponService.findAll();
+        const coupons = await dispatch(loadCoupons()).unwrap();
 
         if (coupons) {
             const filteredCoupons = coupons.filter((coupon: ICoupon) => calculateTimeLeft(new Date(coupon.expiry)).timeLeft < 0);
 
             filteredCoupons.forEach((coupon: ICoupon) => {
-                setAppState(actionTypes.app.DELETE_COUPON, coupon.id);
-                CouponService.delete(coupon.id);
+                dispatch(removeCoupon(coupon.id));
             });
         }
     }
