@@ -1,13 +1,12 @@
-//React
-import { useState } from 'react';
-
 //Onsen UI
 import {
     Page,
 } from 'react-onsenui';
 
+//Capacitor
+import { Browser } from '@capacitor/browser';
+
 //Components
-import Popup from '../../components/Popup';
 import LibrarySections from './LibrariesSections';
 
 //Layouts
@@ -38,11 +37,10 @@ interface Props {
  */
 function Libraries({ navigator }: Props) {
     /**
-     * States
+     * placeholderText
      * 
      */
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [popupContent, setPopupContent] = useState<any>(null);
+    const placeholderText = "Licensz megtekintése";
 
 
     /**
@@ -53,42 +51,50 @@ function Libraries({ navigator }: Props) {
         {
             titleNode: "libraries_section_title_capacitor",
             descriptionNode: "libraries_section_description_capacitor",
-            onClick: () => setPopup(licenses.capacitor)
+            value: placeholderText,
+            onClick: () => openInAppBrowser(licenses.capacitor)
         },
         {
             titleNode: "libraries_section_title_onsenui",
             descriptionNode: "libraries_section_description_onsenui",
-            onClick: () => setPopup(licenses.onsenui)
+            value: placeholderText,
+            onClick: () => openInAppBrowser(licenses.onsenui)
         },
         {
             titleNode: "libraries_section_title_axios",
             descriptionNode: "libraries_section_description_axios",
-            onClick: () => setPopup(licenses.axios)
+            value: placeholderText,
+            onClick: () => openInAppBrowser(licenses.axios)
         },
         {
             titleNode: "libraries_section_title_react",
             descriptionNode: "libraries_section_description_react",
-            onClick: () => setPopup(licenses.react)
+            value: placeholderText,
+            onClick: () => openInAppBrowser(licenses.react)
         },
         {
             titleNode: "libraries_section_title_react-dom",
             descriptionNode: "libraries_section_description_react-dom",
-            onClick: () => setPopup(licenses.react)
+            value: placeholderText,
+            onClick: () => openInAppBrowser(licenses.reactdom)
         },
         {
             titleNode: "libraries_section_title_react-onsenui",
             descriptionNode: "libraries_section_description_react-onsenui",
-            onClick: () => setPopup(licenses.react_onsenui)
+            value: placeholderText,
+            onClick: () => openInAppBrowser(licenses.onsenui)
         },
         {
             titleNode: "libraries_section_title_typescript",
             descriptionNode: "libraries_section_description_typescript",
-            onClick: () => setPopup(licenses.typescript)
+            value: placeholderText,
+            onClick: () => openInAppBrowser(licenses.typescript)
         },
         {
             titleNode: "libraries_section_title_roboto",
             descriptionNode: "libraries_section_description_roboto",
-            onClick: () => setPopup(licenses.roboto)
+            value: placeholderText,
+            onClick: () => openInAppBrowser(licenses.roboto)
         },
         {
             titleNode: "libraries_section_title_background",
@@ -98,13 +104,12 @@ function Libraries({ navigator }: Props) {
 
 
     /**
-     * setPopup
+     * openInAppBrowser
      * 
-     * @param content 
+     * @param url 
      */
-    const setPopup = (content: any) => {
-        setIsOpen(true);
-        setPopupContent(content);
+    const openInAppBrowser = async (url: any) => {
+        await Browser.open({ url });
     }
 
 
@@ -115,11 +120,6 @@ function Libraries({ navigator }: Props) {
                 title="libraries_title">
                 <LibrarySections
                     sections={librarySections} />
-                <Popup
-                    isOpen={isOpen}
-                    onCancel={setIsOpen}>
-                    {popupContent}
-                </Popup>
             </HeaderLayout>
         </Page>
     )
