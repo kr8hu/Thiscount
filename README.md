@@ -16,7 +16,7 @@ npx cap sync
 
 ## Használati útmutató
 
-**Debug**:
+**Development**:
 
 1. **Futtatás a helyi hálózaton**:
 ```bash
